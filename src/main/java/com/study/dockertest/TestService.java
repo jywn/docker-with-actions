@@ -1,4 +1,4 @@
-package com.jjubul.dockertest;
+package com.study.dockertest;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
