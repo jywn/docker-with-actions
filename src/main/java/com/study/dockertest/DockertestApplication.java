@@ -1,4 +1,4 @@
-package com.jjubul.dockertest;
+package com.study.dockertest;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
