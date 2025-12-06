@@ -32,13 +32,10 @@ for i in {1..20}; do
   sleep 3
 done
 
-# nginx 스위치
 if [ "$NEW" = "green" ]; then
-  sed -i 's/server app-blue/# server app-blue/' nginx.conf
-  sed -i 's/# server app-green/server app-green/' nginx.conf
+  ln -sf nginx-green.conf nginx.conf
 else
-  sed -i 's/server app-green/# server app-green/' nginx.conf
-  sed -i 's/# server app-blue/server app-blue/' nginx.conf
+  ln -sf nginx-blue.conf nginx.conf
 fi
 
 docker restart nginx
