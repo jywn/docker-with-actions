@@ -24,6 +24,14 @@ docker pull $APP:$TAG
 # 새 색 컨테이너 업데이트
 TAG=$TAG docker compose up -d app-$NEW
 
+# 헬스체크
+for i in {1..20}; do
+  if curl -fsS http://app-$NEW:8080/actuator/health >/dev/null; then
+    break
+  fi
+  sleep 3
+done
+
 # nginx 스위치
 if [ "$NEW" = "green" ]; then
   sed -i 's/server app-blue/# server app-blue/' nginx.conf
