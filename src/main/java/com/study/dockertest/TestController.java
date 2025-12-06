@@ -12,6 +12,6 @@ public class TestController {
 
     @GetMapping("/test")
     public String run() {
-        return testService.run().toString() + "xyza";
+        return testService.run().toString() + "xyzax";
     }
 }
