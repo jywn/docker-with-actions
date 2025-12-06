@@ -14,4 +14,9 @@ public class TestController {
     public String run() {
         return testService.run().toString() + "xyzax";
     }
+
+    @GetMapping("/040102")
+    public String run040102() {
+        return "현민아 사랑해";
+    }
 }
