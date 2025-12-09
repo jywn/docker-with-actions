@@ -12,8 +12,12 @@ fi
 CURRENT=$(cat $COLOR_FILE)
 if [ "$CURRENT" = "blue" ]; then
   NEW="green"
+  NEW_PORT=8082
+  OLD_PORT=8081
 else
   NEW="blue"
+  NEW_PORT=8081
+  OLD_PORT=8082
 fi
 
 echo "Current: $CURRENT → Deploy: $NEW"
@@ -22,7 +26,9 @@ echo "Current: $CURRENT → Deploy: $NEW"
 docker pull $APP:$TAG
 
 # 새 색 컨테이너 업데이트
-TAG=$TAG docker compose up -d app-$NEW
+export TAG=$TAG
+
+docker compose up -d app-$NEW
 
 # 헬스체크
 #for i in {1..20}; do
@@ -32,13 +38,10 @@ TAG=$TAG docker compose up -d app-$NEW
 #  sleep 3
 #done
 
-if [ "$NEW" = "green" ]; then
-  ln -sf nginx-green.conf nginx.conf
-else
-  ln -sf nginx-blue.conf nginx.conf
-fi
+sudo ln -sf "/etc/nginx/sites-available/app-${NEW}.conf" /etc/nginx/sites-enabled/app.conf
+sudo nginx -t
+sudo systemctl reload nginx
 
-docker restart nginx
 
 # old stop
 docker compose stop app-$CURRENT
